@@ -1,5 +1,7 @@
 <?php
 
+include 'User.php';
+
 class ChatDAO {
 
     private $_mysqli;
@@ -52,6 +54,17 @@ class ChatDAO {
             return $row['admin'];
         }
         return $admin;
+    }
+
+    public function getUsers() {
+        $list = array();
+        $query = "select username, Email, Gender, admin from login order by username";
+        $result = $this->excuteQuery($query);
+        $i = 0;
+        while ($row = mysql_fetch_assoc($result)) {
+            $list[$i++] = new User($row['username'], $row['Email'], $row['Gender'], $row['admin']);
+        }
+        return $list;
     }
 
 }
