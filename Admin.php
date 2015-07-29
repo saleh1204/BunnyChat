@@ -16,13 +16,6 @@
 
         <link href="css/mystyle.css" rel="stylesheet">
         <script src="js/adminActions.js"></script>
-
-        <!-- Latest compiled and minified CSS -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <!-- Optional theme -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <!-- Latest compiled and minified JavaScript -->
-        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
     </head>
     <body>
         <?php
@@ -52,9 +45,9 @@
                 <?php
                 if (isset($_SESSION['login']) && $_SESSION['admin'] == 1) {
                     echo '
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="tableList">
                         <thead class="text-center">
-                            <tr> <th>Username</th> <th>Email</th> <th>Gender</th> <th>Admin</th> <th>Actions</th> </tr>        
+                            <tr> <th style="text-align:center">Username</th> <th style="text-align:center">Email</th> <th style="text-align:center">Gender</th> <th style="text-align:center">Admin</th> <th style="text-align:center">Actions</th> </tr>        
                         </thead>';
                     echo '<tbody id="users">';
                     $dao = new ChatDAO();
@@ -63,7 +56,17 @@
                         echo '<tr>';
                         echo "<td>$user->username</td>";
                         echo "<td>$user->email</td>";
-                        echo "<td>$user->gender</td>";
+                        $srcImg = "";
+                        if ($user->gender == "female")
+                        {
+                            $srcImg = "img/femaleBunny2.jpg";
+                        }
+                        else
+                        {
+                            $srcImg = "img/maleBunny2.jpg";
+                        }
+                        // $user->gender
+                        echo "<td><img src=$srcImg></td>";
                         $admin = "Admin";
                         if ($user->admin == 1) {
                             echo "<td>TRUE</td>";
@@ -73,23 +76,23 @@
                             $admin = "Admin";
                         }
                         echo "<td class=\"form-group\">"
-                        . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"Admin('$user->username');\">$admin</button>"
+                        . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"".$admin."('$user->username');\">$admin</button><br>"
                                 . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"Delete('$user->username')\">Delete</button>"
                                 . "</td>";
                         echo '</tr>';
                     }
-                    
+                    echo '<tr><td colspan="5"><input  class="btn btn-danger btn-block" name="logout" type="button" value=" Logout " onclick="window.location = \'index.php\'"></td></tr>';
                     echo '</tbody>
                     </table>';
                 }
                 ?>
 
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <input  class="btn btn-danger btn-block" name="logout" type="button" value=" Logout " onclick="window.location = 'index.php'">
                 <br>
-                <div id="result">Result will show here</div>
-            </div>
+                <div id="result">Error will show here</div>
+            </div>-->
 <?php ?>
         </div>
     </body>

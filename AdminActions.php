@@ -23,8 +23,21 @@ class AdminActions {
         $username = $request->get("username");
         $query = "update login set Admin=1 where username='" . $username . "'";
         $dao->excuteQuery($query);
-        $ulist = json_encode($dao->getUsers());
+        $list = $dao->getUsers();
+        $ulist = json_encode($list);
         echo $ulist;
+    }
+
+    public function Unadmin($request) {
+
+        $dao = new ChatDAO();
+        $username = $request->get("username");
+        $query = "update login set Admin=0 where username='" . $username . "'";
+        $dao->excuteQuery($query);
+        $list = $dao->getUsers();
+        $ulist = json_encode($list);
+        echo $ulist;
+
     }
 
     public function Delete($request) {
@@ -32,7 +45,8 @@ class AdminActions {
         $username = $request->get("username");
         $query = "delete from login where username='" . $username . "'";
         $dao->excuteQuery($query);
-        $ulist = json_encode($dao->getUsers());
+        $list = $dao->getUsers();
+        $ulist = json_encode($list);
         echo $ulist;
     }
 

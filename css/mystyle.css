@@ -30,3 +30,9 @@ body{
 {
     color: green;
 }
+td, th 
+{
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+}
