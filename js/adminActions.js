@@ -5,6 +5,51 @@
  */
 
 
+
+
+jQuery(document).ready(function () {
+    adjustWindow();
+    $(window).resize(function () {
+        //resize just happened, pixels changed
+        adjustWindow();
+    });
+}
+);
+
+
+function adjustWindow() {
+    // var pageHeight = document.getElementById('page').offsetHeight || 5;
+    // var pageWidth = document.getElementById('page').offsetWidth;
+
+    var pageWidth = $(window).width();
+    var pageHeight = $(window).height();
+    //alert(pageHeight);
+    //alert(pageWidth);
+    //console.info('Height: ' + pageHeight);
+    //console.info('Width: ' + pageWidth);
+    //console.info('main Width: ' + pageWidth / 5.5);
+
+    var is_mobile = false;
+
+    if ($('#dummy').css('display') == 'none') {
+        is_mobile = true;
+    }
+    if (is_mobile)
+    {
+        $('#main').css("width", (pageWidth / 1.1) + "px");
+        //$("#info").html("<br />main width: " + (pageWidth / 1.1));
+    }
+    else
+    {
+        $('#main').css("width", (pageWidth / 5) + "px");
+        //$("#info").html("<br />main width: " + (pageWidth / 5));
+    }
+}
+
+
+
+
+
 function Admin(user)
 {
     $.ajax(
@@ -14,6 +59,7 @@ function Admin(user)
                 processedData: true,
                 data: {
                     cmd: "Admin",
+                    grp: "Admin",
                     username: user
                 },
                 contentType: 'application/json',
@@ -39,6 +85,7 @@ function Unadmin(user)
                 processedData: true,
                 data: {
                     cmd: "Unadmin",
+                    grp: "Admin",
                     username: user
                 },
                 contentType: 'application/json',
@@ -63,6 +110,7 @@ function Delete(user)
                 processedData: true,
                 data: {
                     cmd: "Delete",
+                    grp: "Admin",
                     username: user
                 },
                 //contentType: 'application/json',
@@ -108,7 +156,15 @@ function updateUsers(users)
         row = "<tr>";
         username = "<td>" + usersList[user].username + "</td>";
         email = "<td>" + usersList[user].email + "</td>";
-        gender = "<td>" + usersList[user].gender + "</td>";
+        if (usersList[user].gender == "male")
+        {
+            gender = "<td>" + "<img src='./img/maleBunny2.jpg' class='img-responsive img-rounded'>" + "</td>";
+        }
+        else
+        {
+            gender = "<td>" + "<img src='./img/femaleBunny2.jpg' class='img-responsive img-rounded'>" + "</td>";
+        }
+        
         adminCell = "<td>" + admin + "</td>";
         buttonsCell = "<td class=\"form-group\">";
         adminBtn = "<button class='btn btn-default btn-s btn-block' onclick=\"" + adminFun + "('" + usersList[user].username + "')\";\">" + adminFun + "</button>";

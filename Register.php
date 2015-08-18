@@ -72,7 +72,7 @@
             }
         }
         ?>
-
+        <div id="dummy"></div>
         <div id="main" class="center-block">
             <h1 class="text-center">Welcome to BunnyChat</h1>
             <div id="login">

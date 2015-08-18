@@ -7,9 +7,11 @@
  */
 
 include 'Request.php';
-include 'AdminActions.php';
+//include 'AdminActions.php';
 $request = new Request();
+$class = $request->getGroup() . 'Actions';
+require_once $class . '.php';
 $cmd = $request->getCommand();
-$action = new AdminActions();
+$action = new $class();
 $action->$cmd($request);
 ?>

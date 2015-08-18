@@ -1,6 +1,7 @@
 <?php
 
 include 'User.php';
+include 'Friend.php';
 
 class ChatDAO {
 
@@ -65,6 +66,41 @@ class ChatDAO {
             $list[$i++] = new User($row['username'], $row['Email'], $row['Gender'], $row['admin']);
         }
         return $list;
+    }
+
+    public function getFriends($username) {
+        $list = array();
+        $query = "select friend from friend where username='$username'";
+        $result = $this->excuteQuery($query);
+        $i = 0;
+        while ($row = mysql_fetch_assoc($result)) {
+            $list[$i++] = new Friend($row['friend']);
+        }
+        return $list;
+    }
+    
+    public function predictUsers($username){
+        $list = array();
+        $query = "select username from login where username !='$username'order by username";
+        $result = $this->excuteQuery($query);
+        $i = 0;
+        while ($row = mysql_fetch_assoc($result)) {
+            $list[$i++] = new User($row['username'],"","","");
+        }
+        return $list;
+    }
+
+    public function addFriend($username, $friend) {
+        $query = 'INSERT INTO chat.friend (username, friend) VALUES (\''.$username.'\',\''.$friend.'\');';
+        $this->excuteQuery($query);
+        // INSERT INTO chat.friend (username, friend) 
+	// VALUES ('saleh', 'sad')
+
+    }
+
+    public function removeFriend($username, $friend) {
+        $query = "Delete from friend where username='$username' AND friend='$friend';";
+        $this->excuteQuery($query);
     }
 
 }

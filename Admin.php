@@ -30,7 +30,7 @@
             $msg = 'Login Successful!';
         }
         ?>
-
+        <div id="dummy"></div>
         <div id="main" class="center-block">
             <div id="msg" class="text-center">
                 <h3><?php echo $msg; ?></h3>
@@ -57,16 +57,13 @@
                         echo "<td>$user->username</td>";
                         echo "<td>$user->email</td>";
                         $srcImg = "";
-                        if ($user->gender == "female")
-                        {
+                        if ($user->gender == "female") {
                             $srcImg = "img/femaleBunny2.jpg";
-                        }
-                        else
-                        {
+                        } else {
                             $srcImg = "img/maleBunny2.jpg";
                         }
                         // $user->gender
-                        echo "<td><img src=$srcImg></td>";
+                        echo "<td><img src=$srcImg class='img-responsive img-rounded'></td>";
                         $admin = "Admin";
                         if ($user->admin == 1) {
                             echo "<td>TRUE</td>";
@@ -76,9 +73,9 @@
                             $admin = "Admin";
                         }
                         echo "<td class=\"form-group\">"
-                        . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"".$admin."('$user->username');\">$admin</button><br>"
-                                . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"Delete('$user->username')\">Delete</button>"
-                                . "</td>";
+                        . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"" . $admin . "('$user->username');\">$admin</button><br>"
+                        . "<button class=\"btn btn-default btn-s btn-block\" onclick=\"Delete('$user->username')\">Delete</button>"
+                        . "</td>";
                         echo '</tr>';
                     }
                     echo '<tr><td colspan="5"><input  class="btn btn-danger btn-block" name="logout" type="button" value=" Logout " onclick="window.location = \'index.php\'"></td></tr>';
