@@ -16,6 +16,9 @@ and open the template in the editor.
 #main {
     width: 361px;
 }
+#tabs {
+    width: 380px;
+}
 body{
     //   background-image: url(../img/bunny.gif);
     //   background-repeat: no-repeat;
@@ -102,4 +105,53 @@ li.active a, li.active a:hover {
 
 .nav {
     width: 384px;
+}
+.ui-icon-close {
+    zoom: 1.7;
+}
+
+.chatDiv {
+    background-color: #F5F5F0;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #3B3C3E;
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 10px 7px 5px;
+    height: 300px;
+    overflow-x: auto;
+    overflow-y: auto;
+
+    // #00FFFF 
+}
+
+.sender {
+    border-radius: 15px 50px 30px;
+    border: 1px solid grey;
+    background-color: #00FFFF;
+    width: 280px;
+    word-wrap: break-word;
+    float: right;
+    text-align: right;
+}
+
+.recieve {
+    border-radius: 15px 50px 30px 5px;
+    border: 1px solid grey;
+    background-color: #FF2F2E;
+    width: 280px;
+    word-wrap: break-word;
+    color: white;
+    float: left;
+    text-align: left;
+
+}
+
+h3{
+    display: inline;
+}
+#username {
+    display: inline;
+    color: black;
 }

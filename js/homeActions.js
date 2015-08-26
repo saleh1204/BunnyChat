@@ -9,31 +9,75 @@ var allData;
 
 jQuery(document).ready(function () {
     predictFriendName();
-    //jQuery('.tabs ' + jQuery('.tabs a').attr('href')).hide();
-    jQuery('.tabs a').on('click', function (e) {
-        var currentAttrValue = jQuery(this).attr('href');
-
-        // Show/Hide Tabs
-        //jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-        jQuery('.tabs ' + currentAttrValue).siblings().slideUp(400);
-        jQuery('.tabs ' + currentAttrValue).delay(400).slideDown(400);
-        
-        // Change/remove current tab to active
-        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-
-        e.preventDefault();
-    });
+    //$( "#tabs" ).tabs();
+    updateTabs();
     adjustWindow();
     $(window).resize(function () {
-        //resize just happened, pixels changed
+//resize just happened, pixels changed
         adjustWindow();
     });
 
-
+    $('#friend1Messages').stop().animate({
+        scrollTop: $("#friend1Messages")[0].scrollHeight
+    }, 800);
 }
 );
 
+function updateTabs()
+{
+    var tabs = $("#tabs").tabs({
+        hide: {
+            effect: "fold", duration: 500
+        },
+        show: {
+            effect: "slide", duration: 300
+        },
+        activate: function (event, ui) {
+            console.info(ui.newTab.context.innerHTML);
+            var friendsName = ui.newTab.context.innerHTML;
+            if (friendsName !== "Friends List")
+            {
+                adjustWindow();
 
+                // here goes the code of retrieving the data from the server
+                $('.chatDiv').stop().animate({scrollTop: $(".chatDiv")[0].scrollHeight}, 800);
+
+                console.info("scrolled");
+            }
+
+        }
+
+    });
+    /*
+     * effect options
+     * blind
+     * bounce
+     * clip
+     * drop
+     * explode
+     * fade
+     * fold
+     * highlight
+     * puff
+     * pulsate
+     * scale
+     * shake
+     * size
+     * slide
+     * transfer
+     * 
+     */
+    tabs.find(".ui-tabs-nav").sortable({
+        axis: "x",
+        stop: function () {
+            tabs.tabs("refresh");
+        }});
+    tabs.delegate("span.ui-icon-close", "click", function () {
+        var panelId = $(this).closest("li").remove().attr("aria-controls");
+        $("#" + panelId).remove();
+        tabs.tabs("refresh");
+    });
+}
 function adjustWindow() {
     // var pageHeight = document.getElementById('page').offsetHeight || 5;
     // var pageWidth = document.getElementById('page').offsetWidth;
@@ -47,18 +91,29 @@ function adjustWindow() {
     //console.info('main Width: ' + pageWidth / 5.5);
 
     var is_mobile = false;
-
     if ($('#dummy').css('display') == 'none') {
         is_mobile = true;
     }
     if (is_mobile)
     {
-        $('#main').css("width", (pageWidth / 1.25) + "px");
+        var mainWidth = (pageWidth / 1.25);
+        var tabsWidth = (pageWidth / 1.1);
+        var senderWidth = pageWidth / 1.6;
+        $('#main').css("width", mainWidth + "px");
+        $('#tabs').css("width", tabsWidth + "px");
+        $('.sender').css("width", senderWidth + "px");
+        $('.recieve').css("width", senderWidth + "px");
         //$("#info").html("<br />main width: " + (pageWidth / 1.1));
     }
     else
     {
-        $('#main').css("width", (pageWidth / 5) + "px");
+        var mainWidth = (pageWidth / 5);
+        var tabsWidth = (pageWidth / 4.9);
+        var senderWidth = pageWidth / 6.8;
+        $('#main').css("width", mainWidth + "px");
+        $('#tabs').css("width", tabsWidth + "px");
+        $('.sender').css("width", senderWidth + "px");
+        $('.recieve').css("width", senderWidth + "px");
         //$("#info").html("<br />main width: " + (pageWidth / 5));
     }
 }
@@ -95,11 +150,10 @@ function predictFriendName()
                 prev[cur[0]] = cur[1];
                 return prev;
             }, {});
+ //   var userField1 = cookies["userField"]; // value set with php.
 
-    var userField1 = cookies["userField"]; // value set with php.
-
-    userField = userField1;
-    console.info('userFiled1 = ' + userField1);
+    userField = $("#username").html().trim();
+    console.info('userFiled = ' + userField);
     allData = [];
     $.ajax({
         type: "GET",
@@ -109,17 +163,15 @@ function predictFriendName()
         data: {
             grp: "Home",
             cmd: "predict",
-            username: userField1
+            username: userField
         },
         success: function (data) {
             var newData = jQuery.parseJSON(data);
-
             for (var key in newData) {
                 allData.push(newData[key].username);
             }
         }
     });
-
     $("#friendName").autocomplete({
         source: allData
     });
@@ -137,13 +189,11 @@ function isValidFriend(friend)
         }
     }
     return false;
-
 }
 
-function addFriend(user)
+function addFriend()
 {
     var friendVar = $("#friendName").val();
-    userField = user;
     if (isValidFriend(friendVar) && friendVar != userField)
     {
         alert("Add " + user + " to " + friendVar);
@@ -155,7 +205,7 @@ function addFriend(user)
                     data: {
                         cmd: "Add",
                         grp: "Home",
-                        username: user,
+                        username: userField,
                         friend: friendVar
                     },
                     //dataType: "json",
@@ -181,7 +231,6 @@ function addFriend(user)
 
 function updateFriends(friendList)
 {
-    $('#result').append('Works! <br />');
     $('#tableList tbody').empty();
     var friends = jQuery.parseJSON(friendList);
     //var friendLst = $.parseJSON(friendList);
@@ -202,10 +251,9 @@ function updateFriends(friendList)
 }
 
 
-function removeFriend(friend, user)
+function removeFriend(friend)
 {
     var friendVar = $("#friendName").val();
-    userField = user;
     //  alert("Remove " + user + " to " + friendVar);
     $.ajax(
             "ActionHandler.php",
@@ -215,7 +263,7 @@ function removeFriend(friend, user)
                 data: {
                     cmd: "Remove",
                     grp: "Home",
-                    username: user,
+                    username: userField,
                     friend: friend
                 },
                 //dataType: "json",
@@ -225,18 +273,16 @@ function removeFriend(friend, user)
                     updateFriends(json);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $("#msg").append('<br>' + jqXHR.responseText);
-                    $("#msg").append('<br>' + textStatus);
-                    $("#msg").append('<br>' + errorThrown);
+                    $("#info").append('<br>' + jqXHR.responseText);
+                    $("#info").append('<br>' + textStatus);
+                    $("#info").append('<br>' + errorThrown);
                 }
             });
-
     //   $('#result').append('Remove ' + user + ' from ' + friend + '<br />');
 }
 
 
-function chatFriend(friend, user)
+function chatFriend(friend)
 {
-    userField = user;
-    console.info('chat ' + user + ' and ' + friend);
+    console.info('chat ' + userField + ' and ' + friend);
 }
