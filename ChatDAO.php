@@ -78,28 +78,29 @@ class ChatDAO {
         }
         return $list;
     }
-    
-    public function predictUsers($username){
+
+    public function predictUsers($username) {
         $list = array();
         $query = "select username from login where username !='$username'order by username";
         $result = $this->excuteQuery($query);
         $i = 0;
         while ($row = mysql_fetch_assoc($result)) {
-            $list[$i++] = new User($row['username'],"","","");
+            $list[$i++] = new User($row['username'], "", "", "");
         }
         return $list;
     }
 
     public function addFriend($username, $friend) {
-        $query = 'INSERT INTO chat.friend (username, friend) VALUES (\''.$username.'\',\''.$friend.'\');';
+        $query = 'INSERT INTO chat.friend (username, friend) VALUES (\'' . $username . '\',\'' . $friend . '\');';
         $this->excuteQuery($query);
-        // INSERT INTO chat.friend (username, friend) 
-	// VALUES ('saleh', 'sad')
-
+        $query = 'INSERT INTO chat.friend (username, friend) VALUES (\'' . $friend . '\',\'' . $username . '\');';
+        $this->excuteQuery($query);
     }
 
     public function removeFriend($username, $friend) {
         $query = "Delete from friend where username='$username' AND friend='$friend';";
+        $this->excuteQuery($query);
+        $query = "Delete from friend where username='$friend' AND friend='$username';";
         $this->excuteQuery($query);
     }
 

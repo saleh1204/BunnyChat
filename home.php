@@ -59,7 +59,7 @@
         </div>
 
         <div id="tabs" class="center-block">
-            <ul>
+            <ul id="tabsHeader">
                 <li><a href="#main">Friends List</a></li>
                 <li><a href="#tabs-2">Friend1</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
                 <li><a href="#tabs-3">Friend2</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>

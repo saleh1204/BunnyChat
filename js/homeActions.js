@@ -150,7 +150,7 @@ function predictFriendName()
                 prev[cur[0]] = cur[1];
                 return prev;
             }, {});
- //   var userField1 = cookies["userField"]; // value set with php.
+    //   var userField1 = cookies["userField"]; // value set with php.
 
     userField = $("#username").html().trim();
     console.info('userFiled = ' + userField);
@@ -284,5 +284,86 @@ function removeFriend(friend)
 
 function chatFriend(friend)
 {
-    console.info('chat ' + userField + ' and ' + friend);
+    //console.info('chat ' + userField + ' and ' + friend);
+    var exist = false;
+    var tabsHeader = $("a:contains('" + friend + "')");
+    //alert(tabsHeader.length);
+    //console.info(tabsHeader.length);
+    if (tabsHeader.length !== 0)
+    {
+        exist = true;
+        //console.info(tabsHeader[0].innerHTML);
+        console.info($(tabsHeader[0]).text());
+    }
+    if (exist === false)
+    {
+        $('#tabsHeader').append('<li><a href="#' + friend + '">' + friend + '</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>');
+        var div = '<div id="' + friend + '" class="tab"><p style="text-align: center"> <strong> ' + friend + '</strong> </p></div>';
+        var friendMsgDiv = '<div id="' + friend + 'Messages" class="chatDiv">';
+        // AJAX call to get the messages
+        /* 
+         <p class="sender">
+         s
+         </p>
+         <br />
+         <p class="recieve">
+         a
+         </p>
+         */
+        friendMsgDiv = friendMsgDiv + '</div>';
+
+        var textBtn = '<div class="input-group"><input  class="form-control" type="text" id="' + friend + 'msg" name="message" autocomplete="on" placeholder="Send Message" ><div class="btn btn-default btn-s input-group-addon" id="SendMsg" onclick="sendMsg(' + friend + ')">Send</div></div>';
+        $('#tabs').append(div + friendMsgDiv + textBtn);
+        $("#tabs").tabs("refresh");
+        //$("#tabs").tabs("option", "active", id2Index("#tabs", "#" + friend));
+        $("#" + friend + "msg").keypress(function (evt) {
+            var tmp = evt;
+            if (tmp.keyCode === undefined) {
+                tmp = tmp.key;
+            }
+            else {
+                tmp = tmp.keyCode;
+            }
+            if (tmp == 13)
+            {
+                console.log("Key Pressed " + evt.charCode + "on chat of " + friend);
+                $("#" + friend + "msg").trigger("onclick");
+                //sendMsg(friend);
+            }
+
+        });
+        //   updateTabs();
+    }
+    $("#tabs").tabs("option", "active", id2Index("#tabs", "#" + friend));
+    // <li><a href="#tabs-3">Friend2</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+}
+
+function sendMsg(friend)
+{
+
+    console.info('send ' + $.trim($(friend).text()) + ' a message from ' + userField);
+    var x = $('#' + $.trim($(friend).text()) + 'msg');
+    console.info('message: ' + x.val());
+    // AJAX call to send Message
+    x.val("");
+}
+
+
+
+//tabsId Id of the div containing the tab code.
+//srcId Id of the tab whose id you are looking for
+function id2Index(tabsId, srcId)
+{
+    var index = -1;
+    var i = 0, tbH = $(tabsId).find("li a");
+    var lntb = tbH.length;
+    if (lntb > 0) {
+        for (i = 0; i < lntb; i++) {
+            o = tbH[i];
+            if (o.href.search(srcId) > 0) {
+                index = i;
+            }
+        }
+    }
+    return index;
 }
