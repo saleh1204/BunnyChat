@@ -130,20 +130,21 @@ li.active a, li.active a:hover {
 .sender {
     border-radius: 15px 50px 30px;
     border: 1px solid grey;
-    background-color: #00FFFF;
+    background-color: white;
     width: 280px;
     word-wrap: break-word;
     float: right;
     text-align: right;
+    color: red;
 }
 
 .recieve {
     border-radius: 15px 50px 30px 5px;
     border: 1px solid grey;
-    background-color: #FF2F2E;
+    background-color: white;
     width: 280px;
     word-wrap: break-word;
-    color: white;
+    color: blue;
     float: left;
     text-align: left;
 

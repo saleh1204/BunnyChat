@@ -10,17 +10,18 @@
 
         <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
 
-
+        
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-theme.min.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
-
+        
 
         <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        
         <link href="css/jquery-ui.min.css" rel="stylesheet">
         <link href="css/jquery-ui.structure.min.css" rel="stylesheet">
         <link href="css/jquery-ui.theme.min.css" rel="stylesheet">
-
+        
 
         <link href="css/mystyle.css" rel="stylesheet">
         <script src="js/homeActions.js"></script>
@@ -111,7 +112,9 @@
                 <p>Crazy</p>
                 <div id="friend1Messages" class="chatDiv">
                     <p class="sender">
-                        s
+                        shfksdhfjdfhkhsdlkhf
+                        fdsfkjhsdkfhsdk;fh
+                        dhfjkzshdfjhs;dfdkh;fh
                     </p>
                     <br />
                     <p class="recieve">
@@ -123,6 +126,8 @@
                     <p class="sender">
                         s
                     </p>
+                    <br />
+                    <br />
                     <br />
                     <p class="recieve">
                         a

@@ -107,8 +107,8 @@ function adjustWindow() {
     }
     else
     {
-        var mainWidth = (pageWidth / 5);
-        var tabsWidth = (pageWidth / 4.9);
+        var mainWidth = (pageWidth / 2.5);
+        var tabsWidth = (pageWidth / 2.4);
         var senderWidth = pageWidth / 6.8;
         $('#main').css("width", mainWidth + "px");
         $('#tabs').css("width", tabsWidth + "px");
