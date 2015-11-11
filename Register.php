@@ -61,7 +61,7 @@
                 $result = $dao->addUser($username, $password, $email, $gender);
                 if (!$result) {
                     //die('Invalid query: ' . mysql_error());
-                   // $error = "MySQL error " . mysql_errno() . ": " . mysql_error() . "\n<br>When executing <br>\n$query\n<br>";
+                    // $error = "MySQL error " . mysql_errno() . ": " . mysql_error() . "\n<br>When executing <br>\n$query\n<br>";
                     $error = 'Username/Email already exists';
                 } else {
                     $_SESSION['login_user'] = $username; // Initializing Session
@@ -82,44 +82,51 @@
                 </div>
                 <form action="" method="post">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Username &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
                         <div class="col-sm-10">      
                             <input class="form-control" id="username" name="username" placeholder="username" type="text">
                             <br />
                         </div>
                     </div>
-
+                    <br/>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
                         <div class="col-sm-10">                    
                             <input class="form-control" id="password" name="password1" placeholder="**********" type="password">
-                            <br />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
+                        <label for="inputPassword3" class="col-sm-2 control-label">Confirm Password &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
+                        <br/>
+                        <br/>
                         <div class="col-sm-10">                    
                             <input class="form-control" id="password2" name="password2" placeholder="**********" type="password">
-                            <br />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
+                        <br/>
                         <div class="col-sm-10">      
                             <input class="form-control" id="email" name="email" placeholder="example@example.com" type="email">
-                            <br />
                         </div>
                     </div>
+                    <br/>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Gender &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
                         <div class="col-sm-10">      
                             <label class="radio-inline">
                                 <input type="radio" name="gender" id="inlineRadio1" value="male">Male<img src="img/maleBunny1.jpg">
                             </label>
+                            <br/>
+                            <br/>
                             <label class="radio-inline">
                                 <input type="radio" name="gender" id="inlineRadio2" value="female">Female<img src="img/femaleBunny1.jpg">
                             </label>
-                            <br />
                             <br />
                             <br />
                         </div>

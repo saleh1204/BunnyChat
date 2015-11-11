@@ -38,14 +38,33 @@ class HomeActions {
         $list = $dao->getFriends($username);
         $ulist = json_encode($list);
         echo $ulist;
-
     }
 
     public function predict($request) {
         $dao = new ChatDAO();
-        $username = $request->get("username");    
+        $username = $request->get("username");
         $list = $dao->predictUsers($username);
         $ulist = json_encode($list);
+        echo $ulist;
+    }
+
+    public function sendMsg($request) {
+        $dao = new ChatDAO();
+        $sender = $request->get("sender");
+        $receiver = $request->get("receiver");
+        $msg = $request->get("message");
+        $dao->sendMsg($sender, $receiver, $msg);
+        $messages = $dao->getMessages($sender, $receiver);
+        $ulist = json_encode($messages);
+        echo $ulist;
+    }
+
+    public function getMesaages($request) {
+        $dao = new ChatDAO();
+        $sender = $request->get("sender");
+        $receiver = $request->get("receiver");
+        $messages = $dao->getMessages($sender, $receiver);
+        $ulist = json_encode($messages);
         echo $ulist;
     }
 

@@ -61,11 +61,10 @@
                     $_SESSION['login_user'] = $username; // Initializing Session
                     $_SESSION['login'] = "TRUE";
                     unset($_SESSION['register']);
-                    
-                   // echo 'Admin '. $dao->isAdmin($username, $password);
+
+                    // echo 'Admin '. $dao->isAdmin($username, $password);
                     $_SESSION['admin'] = $dao->isAdmin($username, $password);
                     header("location: home.php"); // Redirecting To Other Page
-                    
                 } else {
                     $error = "Username or Password is invalid";
                 }
@@ -82,16 +81,21 @@
                 </div>
                 <form action="" method="post">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Username &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
+                        <br/>
                         <div class="col-sm-10">      
                             <input class="form-control" id="username" name="username" placeholder="username" type="text">
                             <br />
                         </div>
 
                     </div>
-
+                        <br/>
+                        <br/>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <br/>
+                        <br/>
                         <div class="col-sm-10">                    
                             <input class="form-control" id="password" name="password" placeholder="**********" type="password">
                             <br />

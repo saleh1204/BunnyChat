@@ -10,18 +10,18 @@
 
         <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
 
-        
+
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-theme.min.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
-        
+
 
         <script src="js/jquery-ui.min.js" type="text/javascript"></script>
-        
+
         <link href="css/jquery-ui.min.css" rel="stylesheet">
         <link href="css/jquery-ui.structure.min.css" rel="stylesheet">
         <link href="css/jquery-ui.theme.min.css" rel="stylesheet">
-        
+
 
         <link href="css/mystyle.css" rel="stylesheet">
         <script src="js/homeActions.js"></script>
@@ -48,22 +48,28 @@
         <div id="dummy"></div>
         <div id="msg" class="text-center center-block">
             <h1>Welcome to BunnyChat</h1>
+
             <h3><?php echo $msg; ?>
                 <div id="username">
                     <?php echo $_SESSION['login_user']; ?>
                 </div>
+                <br/>
             </h3>
+            <div class="center-block">
+                <br>
+                <input  class="center-block btn btn-danger btn-block btn-s" name="logout" type="button" value=" Logout " onclick="window.location = 'index.php'" style="width: 150px;">
+            </div>
+
 
             <div id="info">
 
             </div>
+            <br/>
         </div>
 
         <div id="tabs" class="center-block">
             <ul id="tabsHeader">
                 <li><a href="#main">Friends List</a></li>
-                <li><a href="#tabs-2">Friend1</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
-                <li><a href="#tabs-3">Friend2</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
             </ul>
             <div id="main" class="tab active center-block">
 
@@ -92,8 +98,8 @@
                                 echo '<tr>';
                                 echo "<td>$friend->friendName</td>";
                                 echo "<td class=\"form-group\">"
-                                . "<button class=\"remove\" id=\"remove\" onclick=\"removeFriend('$friend->friendName');\">Remove</button>&nbsp&nbsp&nbsp"
-                                . "<button class=\"chat\" id=\"chat\" onclick=\"chatFriend('$friend->friendName');\">Chat</button><br>"
+                                . "<button class=\"chat\" id=\"chat\" onclick=\"chatFriend('$friend->friendName');\">Chat</button>&nbsp&nbsp&nbsp"
+                                . "<button class=\"remove\" id=\"remove\" onclick=\"removeFriend('$friend->friendName');\">Remove</button><br />"
                                 . "</td>";
                                 echo '</tr>';
                             }
@@ -104,72 +110,9 @@
                 <div id="result" class="form-group ">
 
                 </div>
-                <div class="form-group">
-                    <input  class="btn btn-danger btn-block" name="logout" type="button" value=" Logout " onclick="window.location = 'index.php'">
-                </div>
-            </div>
-            <div id="tabs-2" class="tab">
-                <p>Crazy</p>
-                <div id="friend1Messages" class="chatDiv">
-                    <p class="sender">
-                        shfksdhfjdfhkhsdlkhf
-                        fdsfkjhsdkfhsdk;fh
-                        dhfjkzshdfjhs;dfdkh;fh
-                    </p>
-                    <br />
-                    <p class="recieve">
-                        adfnlndf/ndmnfsdnfjlkndjkflkdsj
-                        dskjfnhsdl;jf'skdjksjdlfjsldkjf
-                        dsflkshjdfl;lkdjf'jksd;lkjflsddjlkfjsdljfkldsjfklsdjkflkdsjklsdjlkjsdflkjsdljfskldjlksdjlksjfslkj
-                    </p>
-                    <br />
-                    <p class="sender">
-                        s
-                    </p>
-                    <br />
-                    <br />
-                    <br />
-                    <p class="recieve">
-                        a
-                    </p>
-                    <br />
-                    <p class="sender">
-                        s
-                    </p>
-                    <br />
-                    <p class="recieve">
-                        a
-                    </p>
-                    <br />
-                    <p class="sender">
-                        s
-                    </p>
-                    <br />
-                    <p class="recieve">
-                        a
-                    </p>
-                    <br />
-                    <p class="sender">
-                        s
-                    </p>
-                    <br />
-                    <p class="recieve">
-                        a
-                    </p>
-                    <br />
-                </div>
-                <br />
-                <div class="input-group">
 
-                    <input  class="form-control" type="text" id="message" name="message" autocomplete="on" placeholder="Send Message" >
+            </div>
 
-                    <div class="btn btn-default btn-s input-group-addon" id="SendMsg" onclick="">Send</div>
-                </div>
-            </div>
-            <div id="tabs-3">
-                <p>Crazy 2</p>
-            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

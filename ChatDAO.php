@@ -2,6 +2,7 @@
 
 include 'User.php';
 include 'Friend.php';
+include 'Message.php';
 
 class ChatDAO {
 
@@ -102,6 +103,23 @@ class ChatDAO {
         $this->excuteQuery($query);
         $query = "Delete from friend where username='$friend' AND friend='$username';";
         $this->excuteQuery($query);
+    }
+
+    public function sendMsg($sender, $receiver, $msg) {
+        // INSERT INTO `chat`.`message` (`sender`, `receiver`, `MsgID`, `Message`) VALUES ('saleh', 'sas', '', 'hello there');
+        $query = "INSERT INTO message (sender, receiver, Message) VALUES ('" . $sender . "', '" . $receiver . "', '" . $msg . "');";
+        $this->excuteQuery($query);
+    }
+
+    public function getMessages($sender, $receiver) {
+        $query = "SELECT * FROM message WHERE (sender = '" . $sender . "' AND receiver = '" . $receiver . "') OR (sender = '" . $receiver . "' AND receiver = '" . $sender . "') ORDER BY MsgID";
+        $result = $this->excuteQuery($query);
+        $i = 0;
+        $msglist = array();
+        while ($row = mysql_fetch_assoc($result)) {
+            $msglist[$i++] = new Message($row['sender'], $row['receiver'], $row['Message'], $row['MsgID']);
+        }
+        return $msglist;
     }
 
 }

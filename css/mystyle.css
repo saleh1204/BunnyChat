@@ -17,7 +17,7 @@ and open the template in the editor.
     width: 361px;
     //text-align: left;
 }
-#tabs {
+#tabs, #msg {
     width: 380px;
 }
 body{
@@ -120,7 +120,7 @@ li.active a, li.active a:hover {
     font-weight: bold;
     left: -1px;
     padding: 10px 7px 5px;
-    height: 300px;
+    height: 250px;
     overflow-x: auto;
     overflow-y: auto;
 
