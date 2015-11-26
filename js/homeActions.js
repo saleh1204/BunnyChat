@@ -9,18 +9,12 @@ var allData;
 
 jQuery(document).ready(function () {
     predictFriendName();
-    //$( "#tabs" ).tabs();
     updateTabs();
     adjustWindow();
     $(window).resize(function () {
-//resize just happened, pixels changed
+        //resize just happened, pixels changed
         adjustWindow();
     });
-    /*
-     $('#friend1Messages').stop().animate({
-     scrollTop: $("#friend1Messages")[0].scrollHeight
-     }, 800);
-     */
 }
 );
 
@@ -80,16 +74,9 @@ function updateTabs()
     });
 }
 function adjustWindow() {
-    // var pageHeight = document.getElementById('page').offsetHeight || 5;
-    // var pageWidth = document.getElementById('page').offsetWidth;
 
     var pageWidth = $(window).width();
     var pageHeight = $(window).height();
-    //alert(pageHeight);
-    //alert(pageWidth);
-    //console.info('Height: ' + pageHeight);
-    //console.info('Width: ' + pageWidth);
-    //console.info('main Width: ' + pageWidth / 5.5);
 
     var is_mobile = false;
     if ($('#dummy').css('display') == 'none') {
@@ -137,9 +124,6 @@ function applyTheme()
         },
         text: false
     });
-    //  $('#result').append('Theme Applied!! <br />');
-    // console.info('Theme Applied!!');
-    //document.write('Theme Applied!! <br />');
 }
 
 function predictFriendName()
@@ -153,7 +137,6 @@ function predictFriendName()
                 prev[cur[0]] = cur[1];
                 return prev;
             }, {});
-    //   var userField1 = cookies["userField"]; // value set with php.
 
     userField = $("#username").html().trim();
     console.info('userFiled = ' + userField);
@@ -199,7 +182,6 @@ function addFriend()
     var friendVar = $("#friendName").val();
     if (isValidFriend(friendVar) && friendVar != userField)
     {
-        //alert("Add " + userField + " to " + friendVar);
         $.ajax(
                 "ActionHandler.php",
                 {
@@ -236,7 +218,6 @@ function updateFriends(friendList)
 {
     $('#tableList tbody').empty();
     var friends = jQuery.parseJSON(friendList);
-    //var friendLst = $.parseJSON(friendList);
     for (var friend in friends)
     {
         var friendName = friends[friend].friendName;
@@ -247,8 +228,6 @@ function updateFriends(friendList)
                 '<button class="remove" id="remove" onclick="removeFriend(\'' + friendName + '\', \'' + userField + '\');">Remove</button><br />' +
                 '</td></tr>';
         $('#tableList tbody').append(row + friendCell + buttonsCell);
-        //alert(friends[friend]);
-        //$('#result').append(friends[friend] + '<br />');
     }
     applyTheme();
 }
@@ -257,7 +236,6 @@ function updateFriends(friendList)
 function removeFriend(friend)
 {
     var friendVar = $("#friendName").val();
-    //  alert("Remove " + user + " to " + friendVar);
     $.ajax(
             "ActionHandler.php",
             {
@@ -281,18 +259,14 @@ function removeFriend(friend)
                     $("#info").append('<br>' + errorThrown);
                 }
             });
-    //   $('#result').append('Remove ' + user + ' from ' + friend + '<br />');
 }
 
 
 function chatFriend(friend)
 {
-    //console.info('chat ' + userField + ' and ' + friend);
     var exist = false;
     var friendName;
     var tabsHeader = $("a:contains('" + friend + "')");
-    //alert(tabsHeader.length);
-    //console.info(tabsHeader.length);
     if (tabsHeader.length !== 0)
     {
         exist = true;
@@ -305,25 +279,10 @@ function chatFriend(friend)
     {
         friendName = friend;
         $('#tabsHeader').append('<li><a href="#' + friend + '">' + friend + '</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>');
-        //  <div id="tabs-2" class="tab">
         var div = '<div id="' + friend + '" class="tab"><p style="text-align: center"> <strong> ' + friend + '</strong> </p>';
 
         friendMsgDiv = '<div id="' + friend + 'Messages" class="chatDiv">';
-        // AJAX call to get the messages
-        /* 
-         
-         <p class="sender">
-         s
-         </p>
-         <br />
-         <p class="recieve">
-         a
-         </p>
-         */
-
         friendMsgDiv += "<img alt='loading' src='img/ajax-loader.gif'/>";
-        //friendMsgDiv
-        // console.info("Adding : "+friendName);
         var textBtn = "<div class='input-group'>"
                 + "<input  class='form-control' type='text' id='" + friendName + "msg' name='message' autocomplete='on' placeholder='Send Message' >"
                 + "<div class='btn btn-default btn-s input-group-addon SendMsg' onclick='send_handler(" + friendName + ");'>Send</div>"
@@ -331,7 +290,6 @@ function chatFriend(friend)
         friendMsgDiv = friendMsgDiv + '</div>' + textBtn + '</div>';
         $('#tabs').append(div + friendMsgDiv);
         $("#tabs").tabs("refresh");
-        //$("#tabs").tabs("option", "active", id2Index("#tabs", "#" + friend));
         $("#" + friend + "msg").keypress(function (evt) {
             var tmp = evt;
             if (tmp.keyCode === undefined) {
@@ -343,7 +301,6 @@ function chatFriend(friend)
             if (tmp == 13)
             {
                 console.log("Key Pressed " + evt.charCode + "on chat of " + friend);
-                //$("#" + friend + "msg").trigger("onclick");
                 sendMsg(friend);
             }
 
@@ -359,23 +316,19 @@ function chatFriend(friend)
             updateMessages(friendName, friendName + "Messages");
         }
     }, 3000);
-    // <li><a href="#tabs-3">Friend2</a><span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
 }
 
 
 function send_handler(friend)
 {
-    //console.info($(friend).attr("id"));
     sendMsg($(friend).attr("id"));
 }
 
 function sendMsg(friend)
 {
-    //console.info(friend);
     console.info('send ' + friend + ' a message from ' + userField);
     var theMessage = $('#' + friend + 'msg');
     console.info('message: ' + theMessage.val());
-    // AJAX call to send Message
     $.ajax(
             "ActionHandler.php",
             {
@@ -388,12 +341,10 @@ function sendMsg(friend)
                     receiver: friend,
                     message: theMessage.val()
                 },
-                //dataType: "json",
                 contentType: 'application/json',
                 success: function (json)
                 {
                     loadMessageOntoDiv(json, friend);
-                    //updateMessages(userField, friend+'Messages');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     $("#info").append('<br>' + jqXHR.responseText);
@@ -409,23 +360,18 @@ function loadMessageOntoDiv(data, friend)
     var allMessagesDiv = new Array();
     var msgDiv = "#" + friend + "Messages";
     var newData = jQuery.parseJSON(data);
-    //var newData = json;
-    //console.info('Sender: ' + newData[0].sender + " Receiver: " + newData[0].receiver + " Msg: " + newData[0].msg);
     for (var key in newData) {
-        // newData[key].username
         if (newData[key].sender === userField)
         {
             var x = $('<p class="sender">' + newData[key].msg + '</p> <br /><br />');
             x.attr("msgID", newData[key].msgID);
             allMessagesDiv.push(x);
-            //console.info("Sender");
         }
         else
         {
             var y = $('<p class="recieve">' + newData[key].msg + '</p> <br /><br />');
             y.attr("msgID", newData[key].msgID);
             allMessagesDiv.push(y);
-            //console.info("Receiver");
         }
     }
     /*
@@ -443,11 +389,8 @@ function loadMessageOntoDiv(data, friend)
 
 
     var element = document.getElementById(friend + "Messages");
-
-    // element.scrollIntoView();
     //console.info("Outer Height: " + $(msgDiv).scrollTop() + " Height: " + element.scrollHeight);
     $(msgDiv).animate({scrollTop: element.scrollHeight}, 200);
-    //$('.chatDiv').stop().animate({scrollTop: $(".chatDiv")[0].scrollHeight}, 800);
 }
 
 
@@ -466,7 +409,6 @@ function updateMessages(friend, messagesDivID)
                     sender: userField,
                     receiver: friend
                 },
-                //dataType: "json",
                 contentType: 'application/json',
                 success: function (data)
                 {
