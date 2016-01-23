@@ -26,12 +26,14 @@
     <body>
 
         <?php
-        // put your code here
-        // echo 'Login';
-        include 'ChatDAO.php';
+        require 'ChatDAO.php';
+	//echo 'Loaded Successfully<br />';
+	//echo file_get_contents("ChatDAO.php");
         session_start(); // Starting Session
         $error = ''; // Variable To Store Error Message
         if (isset($_POST['submit'])) {
+	//echo 'Username : ' . $_POST['username'] .  empty($_POST['username']) . '<br />';
+	//echo 'Password : ' . $_POST['password'] . empty($_POST['password'])  . '<br />';
             if (empty($_POST['username']) || empty($_POST['password'])) {
                 $error = "Username or Password is invalid";
             } else {
@@ -48,14 +50,14 @@
 
 
                 $dao = new ChatDAO();
-                //$connection = $dao->getDBConnection();
-                // Selecting Database
-                //  $db = mysql_select_db("chat", $connection);
-                // SQL query to fetch information of registerd users and finds user match.
                 $que = "select * from login where password='$password' AND username='$username'";
-                //$query = mysql_query("select * from login where password='$password' AND username='$username'", $connection);
-                $dao->excuteQuery($que);
-                $rows = mysql_num_rows($dao->excuteQuery($que));
+		//$rows = 0;
+		//echo 'ROWS : ' . $rows . '<br />';
+		
+		$result = $dao->excuteQuery($que);
+		$rows = $result->num_rows;
+//                $rows = mysql_numrows($dao->excuteQuery($que));
+		//echo 'Rows: ' . $rows . '<br />';
                 //$rows =1;
                 if ($rows == 1) {
                     $_SESSION['login_user'] = $username; // Initializing Session
@@ -68,6 +70,8 @@
                 } else {
                     $error = "Username or Password is invalid";
                 }
+		    /* free result set */
+		    $result->close();
                 // mysql_close($connection); // Closing Connection
             }
         }

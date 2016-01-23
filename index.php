@@ -24,7 +24,7 @@
         session_start(); // Starting Session
         session_destroy();
         unset($_COOKIE['userField']);
-        header("Location: login.php");
+        header("Location: Login.php");
         ?>
         <input class="btn btn-primary" type="button" value="Login" onclick="window.location = 'Login.php';">
         <input class="btn btn-success" type="button" value="Register" onclick="window.location = 'Register.php';">

@@ -19,15 +19,21 @@ class ChatDAO {
     private function getDBConnection() {
         if (!isset($_mysqli)) {
             //$_mysqli = new mysqli("localhost", "root", "saleh", "chat");
-            $_mysqli = mysql_connect("localhost", "root", "saleh");
-            $db = mysql_select_db("chat", $_mysqli);
+            $_mysqli = new mysqli("localhost", "root", "saleh", "chat");
+if ($mysqli->connect_errno) {
+    printf("Connect failed: %s\n", $mysqli->connect_error);
+	echo 'Error!!!';
+    exit();
+}
+
+            //$db = mysql_select_db("chat", $_mysqli);
         }
         return $_mysqli;
     }
 
     public function excuteQuery($query) {
         $con = $this->getDBConnection();
-        $result = mysql_query($query, $con);
+        $result = $con->query($query);
         if (mysql_errno()) {
             //echo "MySQL error " . mysql_errno() . ": "
             // . mysql_error() . "\n<br>When executing <br>\n$query\n<br>";
