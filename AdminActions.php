@@ -21,8 +21,8 @@ class AdminActions {
 
         $dao = new ChatDAO();
         $username = $request->get("username");
-        $query = "update login set Admin=1 where username='" . $username . "'";
-        $dao->excuteQuery($query);
+        $query = "update login set Admin=1 where username= ?";
+        $dao->query($query, $username);
         $list = $dao->getUsers();
         $ulist = json_encode($list);
         echo $ulist;
@@ -32,8 +32,8 @@ class AdminActions {
 
         $dao = new ChatDAO();
         $username = $request->get("username");
-        $query = "update login set Admin=0 where username='" . $username . "'";
-        $dao->excuteQuery($query);
+        $query = "update login set Admin=0 where username= ?";
+        $dao->query($query, $usernname);
         $list = $dao->getUsers();
         $ulist = json_encode($list);
         echo $ulist;
@@ -43,16 +43,15 @@ class AdminActions {
     public function Delete($request) {
         $dao = new ChatDAO();
         $username = $request->get("username");
-        $query = "delete from login where username='" . $username . "'";
-        $dao->excuteQuery($query);
+        $query = "delete from login where username=?";
+        $dao->query($query, $username);
         $list = $dao->getUsers();
         $ulist = json_encode($list);
         echo $ulist;
     }
 
     public function execute($request) {
-        //$this->Admin($request);
-        //Admin($request);
+
     }
 
 }

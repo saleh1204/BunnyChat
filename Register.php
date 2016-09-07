@@ -53,15 +53,11 @@
                 $password = stripslashes($password);
                 $email = stripslashes($email);
 
-                $username = mysql_real_escape_string($username);
-                $password = mysql_real_escape_string($password);
-                $email = mysql_real_escape_string($email);
-
                 $dao = new ChatDAO();
+                $password = crypt($password);
                 $result = $dao->addUser($username, $password, $email, $gender);
-                if (!$result) {
-                    //die('Invalid query: ' . mysql_error());
-                    // $error = "MySQL error " . mysql_errno() . ": " . mysql_error() . "\n<br>When executing <br>\n$query\n<br>";
+
+                if (count($result) > 0) {
                     $error = 'Username/Email already exists';
                 } else {
                     $_SESSION['login_user'] = $username; // Initializing Session
@@ -84,7 +80,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Username &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
-                        <div class="col-sm-10">      
+                        <div class="col-sm-10">
                             <input class="form-control" id="username" name="username" placeholder="username" type="text">
                             <br />
                         </div>
@@ -93,7 +89,7 @@
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">Password &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
-                        <div class="col-sm-10">                    
+                        <div class="col-sm-10">
                             <input class="form-control" id="password" name="password1" placeholder="**********" type="password">
                         </div>
                     </div>
@@ -102,7 +98,7 @@
                         <br/>
                         <br/>
                         <br/>
-                        <div class="col-sm-10">                    
+                        <div class="col-sm-10">
                             <input class="form-control" id="password2" name="password2" placeholder="**********" type="password">
                         </div>
                     </div>
@@ -110,7 +106,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Email &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
                         <br/>
-                        <div class="col-sm-10">      
+                        <div class="col-sm-10">
                             <input class="form-control" id="email" name="email" placeholder="example@example.com" type="email">
                         </div>
                     </div>
@@ -118,7 +114,7 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Gender &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
-                        <div class="col-sm-10">      
+                        <div class="col-sm-10">
                             <label class="radio-inline">
                                 <input type="radio" name="gender" id="inlineRadio1" value="male">Male<img src="img/maleBunny1.jpg">
                             </label>
@@ -152,4 +148,3 @@
 
     </body>
 </html>
-

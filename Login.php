@@ -26,53 +26,42 @@
     <body>
 
         <?php
-        require 'ChatDAO.php';
+        require_once __DIR__ . '/ChatDAO.php';
 	//echo 'Loaded Successfully<br />';
 	//echo file_get_contents("ChatDAO.php");
         session_start(); // Starting Session
         $error = ''; // Variable To Store Error Message
         if (isset($_POST['submit'])) {
-	//echo 'Username : ' . $_POST['username'] .  empty($_POST['username']) . '<br />';
-	//echo 'Password : ' . $_POST['password'] . empty($_POST['password'])  . '<br />';
+	          //echo 'Username : ' . $_POST['username'] .  empty($_POST['username']) . '<br />';
+	          //echo 'Password : ' . $_POST['password'] . empty($_POST['password'])  . '<br />';
             if (empty($_POST['username']) || empty($_POST['password'])) {
                 $error = "Username or Password is invalid";
             } else {
                 // Define $username and $password
                 $username = $_POST['username'];
                 $password = $_POST['password'];
-                // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-                // $connection = mysql_connect("localhost", "root", "");
-                // To protect MySQL injection for Security purpose
+
+
                 $username = stripslashes($username);
                 $password = stripslashes($password);
-                $username = mysql_real_escape_string($username);
-                $password = mysql_real_escape_string($password);
 
 
                 $dao = new ChatDAO();
-                $que = "select * from login where password='$password' AND username='$username'";
-		//$rows = 0;
-		//echo 'ROWS : ' . $rows . '<br />';
-		
-		$result = $dao->excuteQuery($que);
-		$rows = $result->num_rows;
-//                $rows = mysql_numrows($dao->excuteQuery($que));
-		//echo 'Rows: ' . $rows . '<br />';
-                //$rows =1;
-                if ($rows == 1) {
+                //$password = crypt($password);
+                $que = "select * from login where username=?";
+                //echo 'Password Hash: ' . $password . '<br />';
+		            $result = $dao->query($que, $username);
+                $db_password = $result[0]['password'];
+                if ($result != false && crypt($password, $db_password) == $db_password) {
+
                     $_SESSION['login_user'] = $username; // Initializing Session
                     $_SESSION['login'] = "TRUE";
                     unset($_SESSION['register']);
-
-                    // echo 'Admin '. $dao->isAdmin($username, $password);
-                    $_SESSION['admin'] = $dao->isAdmin($username, $password);
+                    $_SESSION['admin'] = $result[0]['admin'];
                     header("location: home.php"); // Redirecting To Other Page
                 } else {
                     $error = "Username or Password is invalid";
                 }
-		    /* free result set */
-		    $result->close();
-                // mysql_close($connection); // Closing Connection
             }
         }
         ?>
@@ -88,7 +77,7 @@
                         <label for="inputEmail3" class="col-sm-2 control-label">Username &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
                         <br/>
-                        <div class="col-sm-10">      
+                        <div class="col-sm-10">
                             <input class="form-control" id="username" name="username" placeholder="username" type="text">
                             <br />
                         </div>
@@ -100,7 +89,7 @@
                         <label for="inputPassword3" class="col-sm-2 control-label">Password &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <br/>
                         <br/>
-                        <div class="col-sm-10">                    
+                        <div class="col-sm-10">
                             <input class="form-control" id="password" name="password" placeholder="**********" type="password">
                             <br />
                         </div>
