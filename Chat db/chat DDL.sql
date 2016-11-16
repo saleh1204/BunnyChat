@@ -64,7 +64,7 @@ TRUNCATE TABLE `login`;
 --
 
 INSERT INTO `login` (`username`, `password`, `admin`, `Email`, `Gender`) VALUES
-('ahmed', '$1$T5b6tBvH$y4ZxrL3fDnm.lNAxQEws30', 1, 'ahmed@ahmed.com', 'female');
+('ahmed', '$1$T5b6tBvH$y4ZxrL3fDnm.lNAxQEws30', 1, 'ahmed@ahmed.com', 'male');
 
 -- --------------------------------------------------------
 

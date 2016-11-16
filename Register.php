@@ -40,7 +40,9 @@
                 $error = "Password fields must match!";
             } else if (empty($_POST['email'])) {
                 $error = "Email field must be filled!";
-            } else {
+            } else if (empty($_POST['gender'])){
+		$error = "Gender must be selected!";
+	    } else {
                 $error = "";
                 $username = $_POST['username'];
                 $password = $_POST['password1'];
